@@ -1,0 +1,32 @@
+# Live Search API Demo
+
+This file summarizes how the live search API was used to retrieve and summarize a tweet.
+
+## Query
+```
+https://x.com/julesagent/status/1931143257838231571 を要約してください
+```
+
+## Python code
+```python
+import os
+import requests
+
+url = "https://api.x.ai/v1/chat/completions"
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {os.getenv('XAI_API_KEY')}"
+}
+payload = {
+    "messages": [{"role": "user", "content": "https://x.com/julesagent/status/1931143257838231571 を要約してください"}],
+    "search_parameters": {"mode": "auto"},
+    "model": "grok-3-latest"
+}
+response = requests.post(url, headers=headers, json=payload)
+print(response.json())
+```
+
+## Response
+```
+JulesはXの投稿で、ユーザーのワークフローをよりスムーズで直感的にする新機能を公開したと述べています。内容によると、コードペインにコピー／ダウンロードボタンが追加され、コードスニペットを直接取得しやすくなったことが紹介されています。投稿全体では「Julesの新機能」をまとめたスレッドとして案内されているようですが、取得できた情報はこの機能説明が中心です。
+```
